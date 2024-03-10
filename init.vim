@@ -22,8 +22,8 @@ Plug 'https://github.com/tc50cal/vim-terminal' " Vim Terminal
 Plug 'https://github.com/preservim/tagbar' " Tagbar for code navigation
 Plug 'https://github.com/terryma/vim-multiple-cursors' " CTRL + N for multiple cursors
 
-" Autoformat
-Plug 'https://github.com/vim-autoformat/vim-autoformat'
+let g:python3_host_prog = $HOME . '/.local/venv/nvim/bin/python' " Autoformat
+Plug 'averms/black-nvim', {'do': ':UpdateRemotePlugins'} " Autoformat
 
 " ======= Plugins for HTML CSS JS ===================
 Plug 'https://github.com/mattn/emmet-vim' "emmet for vim
@@ -78,9 +78,6 @@ let g:airline_right_alt_sep = ''
 let g:airline_symbols.branch = ''
 let g:airline_symbols.readonly = ''
 let g:airline_symbols.linenr = ''
-
-" Autoformat
-let g:python3_host_prog="/path/to/python/executable/"
 
 " =========== Close Tag Settings =============
 " filenames like *.xml, *.html, *.xhtml, ...
