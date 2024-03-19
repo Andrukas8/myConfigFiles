@@ -7,6 +7,7 @@
 :set softtabstop=4
 :set mouse=a
 
+
 call plug#begin()
 
 Plug 'http://github.com/tpope/vim-surround' " Surrounding ysw)
@@ -16,23 +17,20 @@ Plug 'https://github.com/vim-airline/vim-airline' " Status bar
 Plug 'https://github.com/lifepillar/pgsql.vim' " PSQL Pluging needs :SQLSetType pgsql.vim
 Plug 'https://github.com/ap/vim-css-color' " CSS Color Preview
 Plug 'https://github.com/rafi/awesome-vim-colorschemes' " Retro Scheme
-Plug 'https://github.com/neoclide/coc.nvim'  " Auto Completion
 Plug 'https://github.com/ryanoasis/vim-devicons' " Developer Icons
-Plug 'https://github.com/tc50cal/vim-terminal' " Vim Terminal
 Plug 'https://github.com/preservim/tagbar' " Tagbar for code navigation
 Plug 'https://github.com/terryma/vim-multiple-cursors' " CTRL + N for multiple cursors
+Plug 'https://github.com/neoclide/coc.nvim'  " Auto Completion
+Plug 'https://github.com/catppuccin/nvim', { 'as': 'catppuccin' }
+Plug 'https://github.com/vim-autoformat/vim-autoformat' " Autoformat
 
-let g:python3_host_prog = $HOME . '/.local/venv/nvim/bin/python' " Autoformat
+let g:python3_host_prog = $HOME . '/.local/venv/nvim/Scripts/python'
+
 Plug 'averms/black-nvim', {'do': ':UpdateRemotePlugins'} " Autoformat
 
-" ======= Plugins for HTML CSS JS ===================
-Plug 'https://github.com/mattn/emmet-vim' "emmet for vim
-Plug 'https://github.com/alvan/vim-closetag' " closing tags
-Plug 'https://github.com/mxw/vim-jsx' " ReactJS JSX sintax highlighting
-Plug 'https://github.com/AndrewRadev/tagalong.vim' " renaming the opening tag automatically renames the closing one
-" run below command to instal coc elements for web-dev:
-" :CocInstall coc-tsserver coc-eslint coc-json coc-prettier coc-css
-" ======== End of Plugins for HTMS CSS JS ============
+" C#
+Plug 'OmniSharp/omnisharp-vim'
+
 set encoding=UTF-8
 
 call plug#end()
@@ -42,24 +40,33 @@ nnoremap <C-n> :NERDTree<CR>
 nnoremap <C-t> :NERDTreeToggle<CR>
 nnoremap <C-l> :call CocActionAsync('jumpDefinition')<CR>
 
+" Autoformat
+noremap <F3> :Autoformat<CR>
 
 " Run Python Files in nvim
-nnoremap <A-`> :w !python<CR>
+nnoremap <C-`> :w !python<CR>
+
+" Run C# File in nvim
+nnoremap <A-`> :w !dotnet run<CR>
 
 nmap <F8> :TagbarToggle<CR>
 
 :set completeopt-=preview " For No Previews
 
-:colorscheme jellybeans
+:colorscheme catppuccin "jellybeans
+
 
 let g:NERDTreeDirArrowExpandable="+"
 let g:NERDTreeDirArrowCollapsible="~"
+let g:coc_global_extensions=[ 'coc-omnisharp' ]
+
 
 " --- Just Some Notes ---
 " :PlugClean :PlugInstall :UpdateRemotePlugins
 "
 " :CocInstall coc-python
 " :CocInstall coc-clangd
+" :CocInstall omni-sharp
 " :CocInstall coc-snippets
 " :CocCommand snippets.edit... FOR EACH FILE TYPE
 
@@ -79,49 +86,5 @@ let g:airline_symbols.branch = ''
 let g:airline_symbols.readonly = ''
 let g:airline_symbols.linenr = ''
 
-" =========== Close Tag Settings =============
-" filenames like *.xml, *.html, *.xhtml, ...
-" These are the file extensions where this plugin is enabled.
-"
-let g:closetag_filenames = '*.html,*.xhtml,*.phtml'
-
-" filenames like *.xml, *.xhtml, ...
-" This will make the list of non-closing tags self-closing in the specified files.
-"
-let g:closetag_xhtml_filenames = '*.xhtml,*.jsx'
-
-" filetypes like xml, html, xhtml, ...
-" These are the file types where this plugin is enabled.
-"
-let g:closetag_filetypes = 'html,xhtml,phtml'
-
-" filetypes like xml, xhtml, ...
-" This will make the list of non-closing tags self-closing in the specified files.
-"
-let g:closetag_xhtml_filetypes = 'xhtml,jsx'
-
-" integer value [0|1]
-" This will make the list of non-closing tags case-sensitive (e.g. `<Link>` will be closed while `<link>` won't.)
-"
-let g:closetag_emptyTags_caseSensitive = 1
-
-" dict
-" Disables auto-close if not in a "valid" region (based on filetype)
-"
-let g:closetag_regions = {
-    \ 'typescript.tsx': 'jsxRegion,tsxRegion',
-    \ 'javascript.jsx': 'jsxRegion',
-    \ 'typescriptreact': 'jsxRegion,tsxRegion',
-    \ 'javascriptreact': 'jsxRegion',
-    \ }
-
-" Shortcut for closing tags, default is '>'
-"
-let g:closetag_shortcut = '>'
-
-" Add > at current position without closing the current tag, default is ''
-"
-let g:closetag_close_shortcut = '<leader>>'
-" ======== End of Close Tag Settings =============
-
-inoremap <expr> <Tab> pumvisible() ? coc#_select_confirm() : "<Tab>"
+"inoremap <expr> <Tab> pumvisible() ? coc#_select_confirm() : "<Tab>"
+inoremap <expr> <Enter> pumvisible() ? coc#_select_confirm() : "<Enter>"
