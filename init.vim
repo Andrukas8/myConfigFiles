@@ -1,5 +1,6 @@
-:set number
-":set relativenumber
+:set nu "same as set number
+":set rnu "same as set relativenumber (set nornu - return to number)
+
 :set autoindent
 :set tabstop=4
 :set shiftwidth=4
@@ -88,3 +89,20 @@ let g:airline_symbols.linenr = ''
 
 "inoremap <expr> <Tab> pumvisible() ? coc#_select_confirm() : "<Tab>"
 inoremap <expr> <Enter> pumvisible() ? coc#_select_confirm() : "<Enter>"
+
+
+" function to toggle number mode
+function! g:ToggleNuMode()
+    if(&rnu == 1)
+	set nornu
+        set nu
+    else
+	set nonu
+        set rnu
+    endif
+endfunc
+
+" map the above function to F5
+nnoremap <f5> :call g:ToggleNuMode()<cr>
+
+
